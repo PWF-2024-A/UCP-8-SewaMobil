@@ -1,0 +1,46 @@
+<x-guest-layout>
+    <div
+        class="flex flex-col items-center min-h-screen px-4 pt-6 bg-gray-100 sm:px-0 sm:justify-center sm:pt-0 dark:bg-gray-900">
+        <div
+            class="w-full px-6 py-4 mt-6 overflow-hidden bg-white rounded-lg shadow-md sm:max-w-sm dark:bg-gray-800 sm:rounded-lg">
+            <form method="POST" action="{{ route('password.store') }}" novalidate>
+                @csrf
+
+                <!-- Password Reset Token -->
+                <input type="hidden" name="token" value="{{ $request->route('token') }}">
+
+                <!-- Email Address -->
+                <div>
+                    <x-input-label for="email" :value="__('Email')" />
+                    <x-text-input id="email" class="block w-full mt-1" type="email" name="email" :value="old('email', $request->email)"
+                        required autofocus autocomplete="username" />
+                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                </div>
+
+                <!-- Password -->
+                <div class="mt-4">
+                    <x-input-label for="password" :value="__('Password')" />
+                    <x-text-input id="password" class="block w-full mt-1" type="password" name="password" required
+                        autocomplete="new-password" />
+                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="mt-4">
+                    <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+
+                    <x-text-input id="password_confirmation" class="block w-full mt-1" type="password"
+                        name="password_confirmation" required autocomplete="new-password" />
+
+                    <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+                </div>
+
+                <div class="flex items-center justify-end mt-4">
+                    <x-primary-button>
+                        {{ __('Reset Password') }}
+                    </x-primary-button>
+                </div>
+            </form>
+        </div>
+    </div>
+</x-guest-layout>
